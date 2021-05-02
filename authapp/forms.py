@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from django import forms
-
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -53,6 +51,6 @@ class RegisterForm(UserCreationForm):
         age = cleaned_data['age']
         try:
             if age < 18 or age > 150:
-                self.add_error('age', 'Check the age. 18 is the minimum.')
+                self.add_error('age', 'Check the age. 18 is minimum.')
         except:
             pass
