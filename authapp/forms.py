@@ -1,17 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django import forms
 
 
 class LoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
-            if field_name == 'username':
-                field.widget.attrs['placeholder'] = 'Введите имя пользователя'
-
-            if field_name == 'password':
-                field.widget.attrs['placeholder'] = 'Введите пароль'
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите пароль'}))
 
     class Meta:
         model = get_user_model()
@@ -19,28 +15,22 @@ class LoginForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field_name != 'avatar':
-                field.widget.attrs['class'] = 'form-control py-4'
-            if field_name == 'username':
-                field.widget.attrs['placeholder'] = 'Введите имя пользователя'
-            if field_name == 'email':
-                field.widget.attrs['placeholder'] = 'Введите адрес эл. почты'
-            if field_name == 'first_name':
-                field.widget.attrs['placeholder'] = 'Введите имя'
-            if field_name == 'last_name':
-                field.widget.attrs['placeholder'] = 'Введите фамилию'
-            if field_name == 'password1':
-                field.widget.attrs['placeholder'] = 'Введите пароль'
-            if field_name == 'password2':
-                field.widget.attrs['placeholder'] = 'Подтвердите пароль'
-            if field_name == 'age':
-                field.widget.attrs['placeholder'] = 'Введите возраст'
-            if field_name == 'city':
-                field.widget.attrs['placeholder'] = 'Введите город'
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите адрес эл. почты'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите фамилию'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Подтвердите пароль'}))
+    age = forms.IntegerField(widget=forms.NumberInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите возраст'}))
+    city = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control py-4', 'placeholder': 'Введите город'}))
 
     class Meta:
         model = get_user_model()
