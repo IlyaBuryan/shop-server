@@ -9,6 +9,7 @@ urlpatterns = [
     path('', mainapp.index, name='index'),
     path('products/', include('mainapp.urls', namespace='mainapp')),
     path('auth/', include('authapp.urls', namespace='authapp')),
+    path('basket/', include('basketapp.urls', namespace='basketapp')),
 ]
 
 if settings.DEBUG:

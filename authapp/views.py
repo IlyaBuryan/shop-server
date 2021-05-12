@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib import auth, messages
+from basketapp.models import Basket
 
 
 def register(request):
@@ -47,6 +48,20 @@ def logout(request):
     return redirect('index')
 
 
+def total_quantity(basket):
+    total_quantity = 0
+    for i in basket:
+        total_quantity += i.quantity
+    return total_quantity
+
+
+def total_sum(basket):
+    total_sum = 0
+    for i in basket:
+        total_sum += i.quantity * i.product.price
+    return total_sum
+
+
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
@@ -55,9 +70,12 @@ def profile(request):
             return redirect('authapp:profile')
     else:
         form = UserProfileForm(instance=request.user)
+    user_basket = Basket.objects.filter(user=request.user)
     context = {
         'title': 'GeekShop - Личный кабинет',
         'form': form,
-        # 'baskets': Basket.objects.all(),
+        'baskets': user_basket,
+        'total_quantity': total_quantity(user_basket),
+        'total_sum': total_sum(user_basket),
     }
     return render(request, 'authapp/profile.html', context)
