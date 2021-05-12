@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib import auth, messages
@@ -43,6 +44,7 @@ def login(request):
     return render(request, 'authapp/login.html', content)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect('index')
@@ -62,11 +64,13 @@ def total_sum(basket):
     return total_sum
 
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Данные успешно изменены!')
             return redirect('authapp:profile')
     else:
         form = UserProfileForm(instance=request.user)
