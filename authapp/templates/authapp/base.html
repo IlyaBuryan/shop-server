@@ -8,7 +8,9 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>{% block title %}{% endblock %}</title>
-    <link href="{% static 'css/auth-admin.css' %}" rel="stylesheet"/>
+    {% block css %}
+        <link href="{% static 'css/auth-admin.css' %}" rel="stylesheet"/>
+    {% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
             crossorigin="anonymous"></script>
 </head>
