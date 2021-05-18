@@ -50,20 +50,6 @@ def logout(request):
     return redirect('index')
 
 
-def total_quantity(basket):
-    total_quantity = 0
-    for i in basket:
-        total_quantity += i.quantity
-    return total_quantity
-
-
-def total_sum(basket):
-    total_sum = 0
-    for i in basket:
-        total_sum += i.quantity * i.product.price
-    return total_sum
-
-
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -74,12 +60,9 @@ def profile(request):
             return redirect('authapp:profile')
     else:
         form = UserProfileForm(instance=request.user)
-    user_basket = Basket.objects.filter(user=request.user)
     context = {
         'title': 'GeekShop - Личный кабинет',
         'form': form,
-        'baskets': user_basket,
-        'total_quantity': total_quantity(user_basket),
-        'total_sum': total_sum(user_basket),
+        'baskets': Basket.objects.filter(user=request.user),
     }
     return render(request, 'authapp/profile.html', context)
