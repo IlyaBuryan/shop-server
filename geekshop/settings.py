@@ -132,3 +132,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = 'authapp.OnlineShopUser'
 
 LOGIN_URL = '/auth/login/'
+LOGOUT_REDIRECT_URL = '/products/'

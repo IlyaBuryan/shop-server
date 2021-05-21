@@ -20,6 +20,6 @@ class ProductsListView(ListView):
 
     def get_queryset(self):
         try:
-            return Product.objects.filter(category=self.kwargs['pk'])
+            return Product.objects.filter(category=self.kwargs['pk']).order_by('name')
         except:
-            return Product.objects.all()
+            return Product.objects.all().order_by('name')
